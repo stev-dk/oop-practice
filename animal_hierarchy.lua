@@ -1,46 +1,62 @@
-Animal = {
-    new = function(self, o)
-        o = o or {}
-        setmetatable(o, self)
-        self.__index = self
-        return o
-    end,
+--[[
+Exercise 3 – Animal Sound System
 
-    speak = function()
-        return "Dum Dee Dum"
-    end
-}
+Create a base class Animal with:
+    name property.
+    speak() method that prints "Some generic animal sound".
 
+Create subclasses:
+    Dog that overrides speak() with "Woof!".
+    Cat that overrides speak() with "Meow!".
+
+Store several animals (both cats and dogs) in a table, loop over them, and call speak() on each.
+--]]
+
+Animal = {}
+Animal.__index = Animal
 Animal.__type = "Animal"
+function Animal:new(o)
+    o = o or {}
+    o.name = o.name or "No name"
+    setmetatable(o, self)
+    self.__index = self
+    return o
+end
 
-Dog = Animal:new()
+function Animal:speak()
+    return "Dum Dee Dum"
+end
+
+Dog = setmetatable({}, {__index = Animal})
 Dog.__type = "Dog"
 
 function Dog:new(o)
     o = Animal.new(self, o)
-    o.speak = function(self)
-        return "Woof!"
-    end
+    o.name = o.name or "Mr. Dog"
     return o
 end
 
-Cat = Animal:new()
+function Dog:speak()
+    return "Woof woof!"
+end
+
+Cat = setmetatable({}, {__index = Animal})
 Cat.__type = "Cat"
 function Cat:new(o)
     o = Animal.new(self, o)
-    o.speak = function(self)
-        return "Meow!"
-    end
+    o.name = o.name or "Mrs. Pussycat"
     return o
 end
 
-lab = Dog:new()
-poodle = Dog:new()
-cat = Cat:new()
-another_cat = Cat:new()
+function Cat:speak()
+    return "Meow meow!"
+end
 
-animals = {lab, cat, poodle, another_cat}
-for i, animal in ipairs(animals) do
-    local animal_type = getmetatable(animal).__type
-    print(string.format("%s says %s", animal_type, animal:speak()))
+local benny = Dog:new({name = "Benny"})
+local jenny = Cat:new({name = "Jenny"})
+local patrick = Dog:new({name = "Patrick"})
+
+local animals = {benny, jenny, patrick}
+for _,animal in ipairs(animals) do
+    print(string.format("%s the %s says %s", animal.name, animal.__type, animal:speak()))
 end
