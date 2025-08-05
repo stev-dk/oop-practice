@@ -58,5 +58,5 @@ local patrick = Dog:new({name = "Patrick"})
 
 local animals = {benny, jenny, patrick}
 for _,animal in ipairs(animals) do
-    print(string.format("%s the %s says %s", animal.name, animal.__type, animal:speak()))
+    print(string.format("%s the %s says %s", animal.name, getmetatable(animal).__type, animal:speak()))
 end
