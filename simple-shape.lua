@@ -61,3 +61,18 @@ print(circle:area())
 local rect = Rectangle:new({width = 5, height = 13})
 print(rect:getName())
 print(rect:area())
+
+--- TEST ---
+print("\n--- Exercise 1: Shape Hierarchy Tests ---")
+
+local circle = Circle:new({ radius = 5 })
+print("Shape:", circle:getName())                 -- Circle
+print("Area:", circle:area())                     -- 78.54
+
+local rectangle = Rectangle:new({ width = 4, height = 6 })
+print("Shape:", rectangle:getName())              -- Rectangle
+print("Area:", rectangle:area())                  -- 24
+
+-- Default test
+local defaultShape = Shape:new()
+print("Default shape name:", defaultShape:getName()) -- Default shape
